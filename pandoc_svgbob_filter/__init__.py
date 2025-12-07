@@ -25,9 +25,15 @@ class SvgbobInline(object):
 
     def __init__(self):
         self.dir_to = "svg"
-        if not which("svgbob_cli"):
-            raise AssertionError("svgbob_cli is not in path")
-        self.svgbob_cmd = "svgbob_cli"
+        # Check PATH first, then common install locations
+        if which("svgbob_cli"):
+            self.svgbob_cmd = "svgbob_cli"
+        else:
+            cargo_bin = os.path.expanduser("~/.cargo/bin/svgbob_cli")
+            if os.path.isfile(cargo_bin) and os.access(cargo_bin, os.X_OK):
+                self.svgbob_cmd = cargo_bin
+            else:
+                raise AssertionError("svgbob_cli is not in PATH or ~/.cargo/bin")
 
     def get_options(self, attributes, doc):
         """Extract svgbob options from attributes and metadata."""
