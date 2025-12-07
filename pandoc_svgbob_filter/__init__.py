@@ -50,7 +50,7 @@ class SvgbobInline(object):
             "--font-size {}".format(font_size) if font_size is not None else "",
             "--scale {}".format(scale) if scale is not None else "",
             "--stroke-width {}".format(stroke_width) if stroke_width is not None else "",
-            "--background transparent",
+            "--background #fdf6e3",
         ])
         return svgbob_option
 
